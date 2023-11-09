@@ -59,3 +59,18 @@ export const atualizarUsuario=async(req:Request,res:Response)=>{
         .json({ok:false,message:"Erro ao atualizar o usuário"})
     }
 }
+
+export const deletarUsuario = async (req:Request,res:Response)=>{
+    const id = req.params.user_id;
+    try {
+        const user = await AppDataSource.getRepository(User).findOne({where:{id:+id}});
+        if(!user){
+            return res.status(404).json({ok:false, message:"Não existe usuário com esse ID"});
+        }
+        await AppDataSource.getTreeRepository(User).delete(user);
+        res.status(200).json({ok:true})
+    } catch (error) {
+        console.log("Erro ao deletar usuário");
+        res.status(500).json({ok:false,message:"Erro ao deletar usuário"})
+    }
+}
