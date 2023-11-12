@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { atualizarUsuario, cadastrarUsuario, deletarUsuario, listarUsuarios } from "./controllers/user";
+import { atualizarUsuario, cadastrarUsuario, deletarUsuario, listarUsuarios } from "./modules/users/controllers/user";
 
 
 const app = express();

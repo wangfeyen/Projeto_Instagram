@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { User } from "../Entities/user";
-import { AppDataSource } from "../database/data-source";
+import { User } from "../Entities/user.entities";
+import { AppDataSource } from "../../../database/data-source";
 
 export const cadastrarUsuario=async(req:Request,res:Response)=>{
     try {
         const user=new User();
         user.name=req.body.name;
         user.email=req.body.email;
-        user.password=req.body.password;
+        user.password_hash=req.body.password;
 
         await AppDataSource.getRepository(User).save(user);
 
@@ -46,7 +46,7 @@ export const atualizarUsuario=async(req:Request,res:Response)=>{
             user.email=req.body.email;
         }
         if(req.body.password){
-            user.password=req.body.password;
+            user.password_hash=req.body.password;
         }
 
         await AppDataSource.getRepository(User).save(user);
