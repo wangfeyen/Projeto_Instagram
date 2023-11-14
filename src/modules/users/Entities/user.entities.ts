@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, DeleteDateColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, DeleteDateColumn, OneToMany } from "typeorm"
+import { Post } from "../../posts/post.entities"
+import { Comment } from "../../comments/Entities/comments.entities"
 
 @Entity('users')
 export class User {
@@ -8,7 +10,7 @@ export class User {
     @Column()
     name: string
 
-    @Column()
+    @Column({unique:true})
     email: string
 
     @Column()
@@ -17,10 +19,10 @@ export class User {
     @Column()
     bio:string
 
-    @Column()
+    @Column({default:0})
     followers_count:number
 
-    @Column()
+    @Column({default:0})
     following_count:number
 
     @CreateDateColumn()
@@ -28,4 +30,12 @@ export class User {
 
     @DeleteDateColumn()
     deletade_at:Date
+
+    //Relations
+
+    @OneToMany(() => Post,(post)=>post.user)
+    posts:Post[];
+
+    @OneToMany(()=>Comment,(comment)=>comment.user)
+    comments:Comment[];
 }
