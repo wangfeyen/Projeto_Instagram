@@ -27,11 +27,12 @@ export class Comment{
     user_id:number
     @JoinColumn({name:"user_id"})
     @ManyToOne(()=>User,(user)=>user.comments)
-    user:User[];
+    user:User;
 
 
     @Column()
     post_id:number
     @ManyToOne(()=>Post,(post)=>post.comments)
-    post:Post[];
+    @JoinColumn({name:"post_id"})
+    post:Post;
 }
